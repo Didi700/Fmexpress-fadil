@@ -1,12 +1,13 @@
 FROM php:8.2-cli
 
-WORKDIR /var/www
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y git unzip
 
 COPY . .
 
-RUN apt-get update && apt-get install -y unzip git
 RUN curl -sS https://getcomposer.org/installer | php
-RUN php composer.phar install
+RUN php composer.phar install --no-dev --optimize-autoloader
 
 EXPOSE 10000
 
